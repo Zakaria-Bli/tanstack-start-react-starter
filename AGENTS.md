@@ -16,8 +16,8 @@ Before editing files for a substantial task:
 - Project/package name: `tanstack-start-react-starter`.
 - Purpose: clean, reusable TanStack Start + React starter template for future projects.
 - UI intent: intentionally blank. Product UI, branding, auth, database, ORM, form library, UI kit, and query-client setup are not included.
-- Included tooling: Vite, TypeScript, Node.js 24.x, pnpm 11.x, Tailwind CSS, Vitest, Biome, React Compiler, TanStack Devtools, and Router Devtools.
-- Not included yet: Git hooks, lint-staged, CI/CD workflows, Docker/containerization, deployment adapter, or platform-specific deployment config.
+- Included tooling: Vite, TypeScript, Node.js 24.x, pnpm 11.x, Tailwind CSS, Vitest, Biome, React Compiler, TanStack Devtools, Router Devtools, Husky, lint-staged, and commitlint.
+- Not included yet: CI/CD workflows, Docker/containerization, deployment adapter, or platform-specific deployment config.
 
 ## Source of Truth
 
@@ -33,6 +33,8 @@ Before editing files for a substantial task:
 - `src/routeTree.gen.ts` — generated route tree. Do not hand-edit.
 - `src/styles.css` — Tailwind entry and minimal base CSS.
 - `biome.json` — Biome lint/format configuration.
+- `commitlint.config.mjs` — conventional commit message rules for the `commit-msg` hook.
+- `.husky/` — Husky git hooks (`pre-commit`, `commit-msg`, `pre-push`). `.husky/_` is generated locally and gitignored.
 - `pnpm-workspace.yaml` — pnpm workspace/settings file, including allowed build-script dependencies.
 - `.nvmrc` and `.node-version` — pinned Node.js version for local tooling.
 - `.vscode/settings.json` — editor defaults, including readonly generated route tree and Biome formatter settings.
@@ -64,7 +66,34 @@ After route file changes, regenerate route types with `pnpm generate-routes` whe
 - `package.json` declares `packageManager`, `engines.node`, and `engines.pnpm`; keep them aligned with `.nvmrc` and `.node-version`.
 - pnpm package-manager settings belong in `pnpm-workspace.yaml`, not the deprecated `pnpm` field in `package.json`.
 - Biome is the formatter/linter. Keep `src/routeTree.gen.ts` excluded because it is generated.
+- Git hooks use Husky 9 (`prepare: husky`). `pre-commit` validates branch names and runs lint-staged with Biome; `commit-msg` runs commitlint; `pre-push` runs `pnpm check`.
 - `pnpm test` uses `vitest run --passWithNoTests` because the starter intentionally has no tests yet.
+
+## Git Conventions
+
+Follow these when creating branches or commits. Hooks enforce them; do not bypass with `--no-verify` unless the user explicitly asks.
+
+### Branch names
+
+- Format: `type/scope-description` (lowercase kebab-case after the slash).
+- Allowed types: `feat`, `fix`, `style`, `refactor`, `chore`, `test`, `build`, `ci`, `infra`, `docs`, `perf`.
+- Examples: `feat/seo-setup`, `fix/auth-contract`, `chore/code-quality-setup`.
+- Do not commit on `main`, `master`, or `staging` unless the user explicitly requests `--no-verify`.
+
+### Commit messages
+
+Conventional Commits with a **required** scope (`commitlint` + `@commitlint/config-conventional`, `scope-empty: never`):
+
+```text
+type(scope): description
+
+[optional body]
+
+[optional footer(s)]
+```
+
+- Scope is required: `feat(router): add route types` — not `feat: add route types`.
+- Keep the subject concise; use the body for details when needed.
 - `tsconfig.json` keeps `verbatimModuleSyntax: false` per TanStack Start guidance to avoid server/client bundle boundary issues.
 - React Compiler is enabled in `vite.config.ts` using `reactCompilerPreset()` from `@vitejs/plugin-react` with `@rolldown/plugin-babel`.
 - Keep the Vite plugin order unless intentionally changing the build pipeline:
