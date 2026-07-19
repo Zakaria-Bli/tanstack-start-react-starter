@@ -13,6 +13,9 @@ pnpm test
 pnpm lint
 pnpm format
 pnpm check
+pnpm check:ci
+pnpm typecheck
+pnpm audit:dependencies
 ```
 
 ## Stack
@@ -23,6 +26,8 @@ pnpm check
 - Tailwind CSS
 - React Compiler
 - Biome linting and formatting
+- Husky, lint-staged, and Commitlint
+- GitHub Actions CI and Dependabot
 - Vitest
 - Node.js 24.x
 - pnpm 11.x
@@ -48,6 +53,12 @@ pnpm install
 - `src/routeTree.gen.ts` — generated route tree; do not edit by hand
 - `src/styles.css` — global Tailwind entry and minimal base CSS
 - `biome.json` — lint and format configuration
+- `commitlint.config.mjs` — Conventional Commits enforcement
+- `.husky/` — local Git hooks
+- `.github/actions/setup/action.yml` — shared CI setup action
+- `.github/workflows/ci.yml` — CI workflow
+- `.github/dependabot.yml` — dependency update automation
+- `.github/PULL_REQUEST_TEMPLATE.md` — pull request template
 
 ## Notes
 
