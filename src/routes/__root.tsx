@@ -1,9 +1,10 @@
-import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import type { ReactNode } from "react";
+import { TanStackDevtools } from "@tanstack/react-devtools"
+import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router"
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 
-import appCss from "../styles.css?url";
+import appCss from "#/styles.css?url"
+
+import type { ReactNode } from "react"
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -27,7 +28,7 @@ export const Route = createRootRoute({
 		],
 	}),
 	shellComponent: RootDocument,
-});
+})
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 	return (
@@ -51,5 +52,5 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 				<Scripts />
 			</body>
 		</html>
-	);
+	)
 }
