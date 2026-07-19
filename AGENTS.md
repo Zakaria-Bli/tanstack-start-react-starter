@@ -34,6 +34,8 @@ Before editing files for a substantial task:
 - `src/router.tsx` — router factory and TanStack Router type registration.
 - `src/routeTree.gen.ts` — generated route tree. Do not hand-edit.
 - `src/styles.css` — Tailwind entry and minimal base CSS.
+- `README.md` — public starter documentation and usage guide.
+- `LICENSE` — MIT license for public reuse.
 - `biome.json` — Biome lint/format configuration.
 - `vitest.config.ts` — Vitest configuration for jsdom, jest-dom setup, and V8 coverage.
 - `src/lib/tests/setup.ts` — shared test setup file loaded by Vitest.
