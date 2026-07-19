@@ -1,7 +1,9 @@
 <!-- intent-skills:start -->
+
 ## Skill Loading
 
 Before editing files for a substantial task:
+
 - Run `pnpm dlx @tanstack/intent@latest list` from the workspace root to see available local skills.
 - If a listed skill matches the task, run `pnpm dlx @tanstack/intent@latest load <package>#<skill>` before changing files.
 - Use the loaded `SKILL.md` guidance while making the change.
@@ -16,7 +18,7 @@ Before editing files for a substantial task:
 - Project/package name: `tanstack-start-react-starter`.
 - Purpose: clean, reusable TanStack Start + React starter template for future projects.
 - UI intent: intentionally blank. Product UI, branding, auth, database, ORM, form library, UI kit, and query-client setup are not included.
-- Included tooling: Vite, TypeScript, Node.js 24.x, pnpm 11.x, Tailwind CSS, Vitest, Biome, React Compiler, TanStack Devtools, Router Devtools, Husky, lint-staged, Commitlint, GitHub Actions CI, and Dependabot.
+- Included tooling: Vite, TypeScript, Node.js 24.x, pnpm 11.x, Tailwind CSS, Vitest, React Testing Library, jest-dom, V8 coverage, Biome, React Compiler, TanStack Devtools, Router Devtools, Husky, lint-staged, Commitlint, GitHub Actions CI, and Dependabot.
 - Not included yet: Docker/containerization, deployment adapter, or platform-specific deployment config.
 
 ## Source of Truth
@@ -33,6 +35,8 @@ Before editing files for a substantial task:
 - `src/routeTree.gen.ts` — generated route tree. Do not hand-edit.
 - `src/styles.css` — Tailwind entry and minimal base CSS.
 - `biome.json` — Biome lint/format configuration.
+- `vitest.config.ts` — Vitest configuration for jsdom, jest-dom setup, and V8 coverage.
+- `src/lib/tests/setup.ts` — shared test setup file loaded by Vitest.
 - `commitlint.config.mjs` — Conventional Commits configuration.
 - `.husky/` — local Git hooks for branch naming, commit messages, staged file checks, and pre-push checks. `.husky/_` is generated locally and gitignored.
 - `.github/actions/setup/action.yml` — shared GitHub Actions setup for pnpm, Node.js, and frozen-lockfile installs.
@@ -50,20 +54,20 @@ Before editing files for a substantial task:
 - Production build: `pnpm build`
 - Preview build: `pnpm preview`
 - Tests: `pnpm test`
+- Watch tests: `pnpm test:watch`
+- Coverage tests: `pnpm test:coverage`
 - Lint: `pnpm lint`
 - Format: `pnpm format`
 - Biome check: `pnpm check`
 - Biome CI: `pnpm check:ci`
 - Type check: `pnpm typecheck`
+- Full validation: `pnpm validate`
 - Dependency audit: `pnpm audit:dependencies`
 
 After meaningful changes, run at least:
 
 ```bash
-pnpm check
-pnpm typecheck
-pnpm test
-pnpm build
+pnpm validate
 ```
 
 After route file changes, regenerate route types with `pnpm generate-routes` when dev/build has not already done so.
@@ -74,9 +78,10 @@ After route file changes, regenerate route types with `pnpm generate-routes` whe
 - `package.json` declares `packageManager`, `engines.node`, and `engines.pnpm`; keep them aligned with `.nvmrc` and `.node-version`.
 - pnpm package-manager settings belong in `pnpm-workspace.yaml`, not the deprecated `pnpm` field in `package.json`.
 - Biome is the formatter/linter. Use `pnpm check:ci` in CI for CI-specific annotations. Keep `src/routeTree.gen.ts` excluded because it is generated.
-- Git hooks use Husky 9 (`prepare: husky`). `pre-commit` validates branch names and runs lint-staged with Biome; `commit-msg` runs Commitlint; `pre-push` runs `pnpm check`.
+- Git hooks use Husky 9 (`prepare: husky`). `pre-commit` validates branch names and runs lint-staged with Biome; `commit-msg` runs Commitlint; `pre-push` runs `pnpm validate`.
 - GitHub Actions CI uses `.github/actions/setup/action.yml` to install pnpm from `packageManager`, set Node from `.nvmrc`, cache pnpm, and run `pnpm install --frozen-lockfile`.
 - `pnpm test` uses `vitest run --passWithNoTests` because the starter intentionally has no tests yet.
+- Vitest uses `vitest.config.ts` with `jsdom`, global test APIs, jest-dom matchers from `src/lib/tests/setup.ts`, and V8 coverage via `@vitest/coverage-v8`.
 - `tsconfig.json` keeps `verbatimModuleSyntax: false` per TanStack Start guidance to avoid server/client bundle boundary issues.
 - React Compiler is enabled in `vite.config.ts` using `reactCompilerPreset()` from `@vitejs/plugin-react` with `@rolldown/plugin-babel`.
 - Keep the Vite plugin order unless intentionally changing the build pipeline:

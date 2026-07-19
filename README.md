@@ -10,11 +10,14 @@ pnpm dev
 pnpm build
 pnpm preview
 pnpm test
+pnpm test:watch
+pnpm test:coverage
 pnpm lint
 pnpm format
 pnpm check
 pnpm check:ci
 pnpm typecheck
+pnpm validate
 pnpm audit:dependencies
 ```
 
@@ -28,7 +31,7 @@ pnpm audit:dependencies
 - Biome linting and formatting
 - Husky, lint-staged, and Commitlint
 - GitHub Actions CI and Dependabot
-- Vitest
+- Vitest, React Testing Library, and jest-dom
 - Node.js 24.x
 - pnpm 11.x
 
@@ -53,6 +56,8 @@ pnpm install
 - `src/routeTree.gen.ts` — generated route tree; do not edit by hand
 - `src/styles.css` — global Tailwind entry and minimal base CSS
 - `biome.json` — lint and format configuration
+- `vitest.config.ts` — Vitest configuration for jsdom, jest-dom setup, and V8 coverage
+- `src/lib/tests/setup.ts` — shared test setup file
 - `commitlint.config.mjs` — Conventional Commits enforcement
 - `.husky/` — local Git hooks
 - `.github/actions/setup/action.yml` — shared CI setup action
@@ -65,6 +70,8 @@ pnpm install
 - `src/routeTree.gen.ts` is generated. Regenerate with `pnpm generate-routes` after route changes.
 - `verbatimModuleSyntax` stays disabled for TanStack Start server/client boundaries.
 - React Compiler is enabled in `vite.config.ts` via `reactCompilerPreset()`.
+- Tests run in jsdom with jest-dom matchers loaded from `src/lib/tests/setup.ts`.
+- Coverage is available with `pnpm test:coverage` and writes to ignored `coverage/` output.
 
 ## Environment variables
 
