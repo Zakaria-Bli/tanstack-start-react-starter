@@ -39,7 +39,7 @@
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
-    "@tanstack/router-plugin": "^1.132.0",
+    "@tanstack/router-plugin": "^1.168.23",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18"
@@ -50,7 +50,7 @@
     "@commitlint/config-conventional": "^21.2.0",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tanstack/devtools-vite": "latest",
-    "@tanstack/router-cli": "^1.132.0",
+    "@tanstack/router-cli": "^1.167.21",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
